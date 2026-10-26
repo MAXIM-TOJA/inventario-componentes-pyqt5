@@ -1,10 +1,10 @@
 # Inventario de componentes electrónicos
-### Edición PySide6 + pypdfium2
+### Edición PyQt5 + PyMuPDF
 
 Aplicación de escritorio, portátil y sin servidor, para llevar el inventario de componentes electrónicos de un
 taller, un laboratorio o un aficionado: qué hay, dónde está, cuánto vale, con qué documentación y cómo se etiqueta.
 
-> Existe una edición equivalente con **PyQt5 + PyMuPDF**: [inventario-componentes-pyqt5](https://github.com/MAXIM-TOJA/inventario-componentes-pyqt5).
+> Existe una edición equivalente con **PySide6 + pypdfium2**: [inventario-componentes-pyside6](https://github.com/MAXIM-TOJA/inventario-componentes-pyside6).
 
 **Contenido:** [Motivación](#motivación) · [Funcionalidades](#funcionalidades) · [Alcance](#alcance) ·
 [Portabilidad](#portabilidad) · [Estructura](#estructura-del-código-y-por-qué) · [Instalación](#instalación-y-arranque) ·
@@ -83,7 +83,6 @@ y agregar extensiones sin romper el resto: cada capa solo usa a las que están d
 ```
 interfaz/                ventanas y diálogos (un módulo por ventana)
 capital.py               valorización y planilla de Excel (sin interfaz)
-pdf_motor.py             lectura de PDF con pypdfium2 (sin interfaz)
 almacenamiento.py        documentos por huella SHA-256
 ocr.py                   reconocimiento de texto (Tesseract)
 utilidades.py            funciones de texto
@@ -97,7 +96,7 @@ migrar_a_hash.py         migración única de adjuntos antiguos al almacén por 
 - **Lo que no necesita pantalla no la usa:** el cálculo del capital y la capa de documentos funcionan sin la
   interfaz, y se pueden probar o reutilizar solos.
 - **Extender es agregar un módulo** en `interfaz/` (una ventana nueva) o una función en la capa que corresponda.
-- **Por qué PySide6 + pypdfium2:** esta edición reemplaza las bibliotecas con copyleft fuerte (PyQt5 y PyMuPDF) por PySide6 (LGPL) y pypdfium2 (Apache 2.0 / BSD), para tener libertad de elegir la licencia de la aplicación. Toda la lectura de PDF está aislada en `pdf_motor.py`, sin Qt, y se puede probar por separado.
+- **PyQt5 + PyMuPDF** es la combinación con la que se desarrolló la aplicación. PyMuPDF resuelve el visor de PDF con poco código, pero su licencia (AGPL) y la de PyQt5 (GPL) condicionan cómo se puede distribuir; por eso existe la otra edición.
 
 La carpeta `manuales/` incluye el **Manual de usuario**, el **Manual de instalación** y el **Manual técnico** (con
 cada módulo, la estructura de la base de datos y el código fuente), en PDF y Word.
@@ -109,16 +108,16 @@ Requisitos: Windows y **Python 3.13**. Desde la carpeta que contiene `app_invent
 python -m pip install -r requirements.txt
 python app_inventario.py
 ```
-Bibliotecas: PySide6, pypdfium2, ReportLab, qrcode, Pillow, pytesseract y openpyxl. Opcional: **Tesseract OCR** para leer texto en páginas escaneadas. Si `pip` no se
+Bibliotecas: PyQt5, PyMuPDF, ReportLab, qrcode, Pillow, pytesseract y openpyxl. Opcional: **Tesseract OCR** para leer texto en páginas escaneadas. Si `pip` no se
 reconoce, usa siempre `python -m pip`. Un entorno virtual es opcional.
 
 ## Ejecutable para Windows
 ```
 python -m PyInstaller --noconfirm --clean --windowed --name Inventario app_inventario.py
 ```
-Se genera `dist\Inventario\`. Para distribuirlo, genéralo en carpeta (no en un solo archivo): la LGPL de Qt exige que el usuario pueda reemplazar sus bibliotecas. Los ejecutables ya compilados están en la sección **Releases** del repositorio.
+Se genera `dist\Inventario\`. El ejecutable incluye PyQt5 y PyMuPDF; al distribuirlo hay que ofrecer también el código fuente (este repositorio lo hace). Los ejecutables ya compilados están en la sección **Releases** del repositorio.
 
 ## Licencia
-Distribuida bajo la **GNU GPL v3** (ver [`LICENSE`](LICENSE)). PySide6 es LGPL v3 y pypdfium2 es Apache 2.0 / BSD, de modo que la licencia de la aplicación podría cambiarse. Esto es información general, no asesoramiento legal.
+Distribuida bajo la **GNU GPL v3** (ver [`LICENSE`](LICENSE)). PyQt5 es GPL v3 y PyMuPDF es AGPL v3; sus condiciones se explican en `LICENCIAS_DE_TERCEROS.md`. Esto es información general, no asesoramiento legal.
 Detalle de las bibliotecas de terceros en [`LICENCIAS_DE_TERCEROS.md`](LICENCIAS_DE_TERCEROS.md).
 Copyright (c) 2026 Maxim Toja.
