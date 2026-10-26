@@ -1,0 +1,7 @@
+PyQt5
+pymupdf
+reportlab
+qrcode[pil]
+pillow
+pytesseract
+openpyxl
